@@ -5,24 +5,38 @@ app.use(bodyParser.json())
 
 
 const mockUserData = [
-    {name: 'Jack'},
-    {name: 'Jill'}
+    {name: 'Jack', hash: "SuperSecret99", secretData: "Likes flowers", bearer: ""},
+    {name: 'Jill', hash: "1234567", secretData: "Likes Jack", bearer: ""},
+    {name: 'Billy', hash: "Boris7991", secretData: "Likes guns!", bearer: ""}
 ]
 app.get('/users', function(req,res){
     res.json({
         success: true,
         message: 'successfully got users. Nice!',
-        users: mockUserData
+        users: mockUserData.name
     })
 })
 
 app.get('/users/:id',function(req,res){
-    console.log(req.params.id)
-    res.json({
+    
+    const found = mockUserData.find(element => element.name === req.params.id)
+    
+    if (found){
+        console.log(req.params.id)
+        res.json({
         success: true,
         message: 'got one user',
+        user: found.name
+    })
+    }
+    else {
+        console.log(req.params.id)
+        res.json({
+        success: false,
+        message: 'user not found',
         user: req.params.id
     })
+    }
 })
 
 app.post('/login',function(req,res){
@@ -45,5 +59,14 @@ app.post('/login',function(req,res){
          })
     }
 })
+
+app.get('/secret',function(req,res){
+
+})
+
+
+
+
+
 
 app.listen(8000,function(){console .log("server is running")})
