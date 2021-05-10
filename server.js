@@ -40,13 +40,13 @@ app.get('/users/:id',function(req,res){
 })
 
 app.post('/login',function(req,res){
-    const username=req.body.username;
-    const password=req.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
-    const mockUsername="billyTheKid";
-    const mockPassword="superSecret";
+    const found = mockUserData.find(element => element.name === username)
+    
 
-    if (username===mockUsername && password===mockPassword){
+    if (found && found.hash === password){
          res.json({
               success: true,
               message: 'password and username match!',
