@@ -47,11 +47,15 @@ app.post('/login',function(req,res){
     
 
     if (found && found.hash === password){
-         res.json({
+
+        mocktokenfunction = [...found.hash].reverse().join("");
+        
+        res.json({
               success: true,
               message: 'password and username match!',
-              token: 'encrypted token goes here'
+              token: mocktokenfunction
          })
+        mockUserData.token = mocktokenfunction;
     } else {
          res.json({
               success: false,
